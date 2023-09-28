@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API</title>
+</head>
+
+<body>
+    <button id="random-joke-button">Get a random joke</button>
+
+    <form id="category-joke-form">
+        <label for="joke-by-category">Choose a category:</label>
+        <select name="joke-by-category" id="select-joke-by-category"></select>
+        <input id="category-joke-btn" type="submit" value="Get a joke by category">
+    </form>
+
+    <form id="query-joke-form">
+        <label for="joke-by-query">Write a query for a joke:</label>
+        <input type="text" name="joke-by-query" id="select-joke-by-query"></input>
+        <input id="query-joke-btn" type="submit" value="Get a joke by query">
+    </form>
+
+    <p id="joke-paragraph"></p>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
