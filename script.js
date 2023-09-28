@@ -27,7 +27,7 @@ fetch("https://api.chucknorris.io/jokes/categories")
   .then((res) => res.json())
   .then((categories) => {
     categories.forEach((category) => {
-      let categoryOption = document.createElement("option");
+      const categoryOption = document.createElement("option");
       categoryOption.setAttribute("value", category);
       categoryOption.textContent = category;
       selectCategoryElement.append(categoryOption);
@@ -67,4 +67,55 @@ queryJokeForm.addEventListener("submit", (event) => {
         jokeParagraph.textContent = "There are no jokes with this query";
       }
     });
+});
+
+// Padarykime dabar kad galima butu pasirinkti ir kategorija ir irasyti paieskos fraze
+
+categoryQueryJokeForm = document.querySelector("#category-query-joke-form");
+selectJokeCategory = document.querySelector("#select-joke-category");
+selectJokeQuery = document.querySelector("#select-joke-query");
+
+fetch("https://api.chucknorris.io/jokes/categories")
+  .then((res) => res.json())
+  .then((categories) => {
+    categories.forEach((category) => {
+      const categoryOption = document.createElement("option");
+      categoryOption.setAttribute("value", category);
+      categoryOption.textContent = category;
+      selectJokeCategory.append(categoryOption);
+    });
+  });
+
+categoryQueryJokeForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const selectedCategory = selectJokeCategory.value;
+  const query = selectJokeQuery.value;
+
+  if (query) {
+    fetch(`https://api.chucknorris.io/jokes/search?query=${query}`)
+      .then((res) => res.json())
+      .then((queryJoke) => {
+        if (queryJoke.result && queryJoke.result.length > 0) {
+          const categoryFilteredJokes = queryJoke.result.filter((joke) =>
+            joke.categories.includes(selectedCategory)
+          );
+
+          if (categoryFilteredJokes.length > 0) {
+            const randomIndex = Math.floor(
+              Math.random() * categoryFilteredJokes.length
+            );
+            const randomJoke = categoryFilteredJokes[randomIndex];
+
+            jokeParagraph.textContent = randomJoke.value;
+          } else {
+            jokeParagraph.textContent =
+              "There are no jokes in this category with this query";
+          }
+        } else {
+          jokeParagraph.textContent = "There are no jokes with this query";
+        }
+      });
+  } else {
+    jokeParagraph.textContent = "Please enter a query";
+  }
 });
