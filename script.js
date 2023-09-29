@@ -8,20 +8,21 @@
 
 // 3. Sukurti galimybę ieškoti juokelių pagal užklausos frazę.
 
-randomJokeButton = document.querySelector("#random-joke-button");
-jokeParagraph = document.querySelector("#joke-paragraph");
+const randomJokeButton = document.querySelector("#random-joke-button");
+const jokeParagraph = document.querySelector("#joke-paragraph");
 
 randomJokeButton.addEventListener("click", () => {
   fetch("https://api.chucknorris.io/jokes/random")
     .then((res) => res.json())
     .then((joke) => {
-      //   const jokeParagraph = document.querySelector("#joke-paragraph");
       jokeParagraph.textContent = joke.value;
     });
 });
 
-categoryJokeButton = document.querySelector("#category-joke-btn");
-selectCategoryElement = document.querySelector("#select-joke-by-category");
+const categoryJokeButton = document.querySelector("#category-joke-btn");
+const selectCategoryElement = document.querySelector(
+  "#select-joke-by-category"
+);
 
 fetch("https://api.chucknorris.io/jokes/categories")
   .then((res) => res.json())
@@ -40,30 +41,27 @@ categoryJokeButton.addEventListener("click", (event) => {
   fetch(`https://api.chucknorris.io/jokes/random?category=${selectedCategory}`)
     .then((res) => res.json())
     .then((joke) => {
-      //   const jokeParagraph = document.querySelector("#joke-paragraph");
       jokeParagraph.textContent = joke.value;
     });
 });
 
-queryJokeForm = document.querySelector("#query-joke-form");
-queryJokeButton = document.querySelector("#category-joke-btn");
-queryInputElement = document.querySelector("#select-joke-by-query");
+const queryJokeForm = document.querySelector("#query-joke-form");
+const queryJokeButton = document.querySelector("#category-joke-btn");
+const queryInputElement = document.querySelector("#select-joke-by-query");
 
 queryJokeForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const query = queryInputElement.value;
-  console.log(query);
+  // console.log(query);
   fetch(`https://api.chucknorris.io/jokes/search?query=${query}`)
     .then((res) => res.json())
     .then((joke) => {
       if (joke.result && joke.result.length > 0) {
         const randomIndex = Math.floor(Math.random() * joke.result.length);
         const randomJoke = joke.result[randomIndex];
-        // const jokeParagraph = document.querySelector("#joke-paragraph");
         jokeParagraph.textContent = randomJoke.value;
       } else {
-        // const jokeParagraph = document.querySelector("#joke-paragraph");
         jokeParagraph.textContent = "There are no jokes with this query";
       }
     });
@@ -71,9 +69,11 @@ queryJokeForm.addEventListener("submit", (event) => {
 
 // Padarykime dabar kad galima butu pasirinkti ir kategorija ir irasyti paieskos fraze
 
-categoryQueryJokeForm = document.querySelector("#category-query-joke-form");
-selectJokeCategory = document.querySelector("#select-joke-category");
-selectJokeQuery = document.querySelector("#select-joke-query");
+const categoryQueryJokeForm = document.querySelector(
+  "#category-query-joke-form"
+);
+const selectJokeCategory = document.querySelector("#select-joke-category");
+const selectJokeQuery = document.querySelector("#select-joke-query");
 
 fetch("https://api.chucknorris.io/jokes/categories")
   .then((res) => res.json())
